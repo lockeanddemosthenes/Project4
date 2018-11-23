@@ -5,7 +5,6 @@ import javafx.scene.shape.Circle;
 /**
  * Class that implements a ball with a position and velocity.
  */
-//this is a test
 public class Ball {
 	// Constants
 	/**
