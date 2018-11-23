@@ -61,8 +61,16 @@ public class Ball {
 		double dy = vy * deltaNanoTime;
 		x += dx;
 		y += dy;
-
-		circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
-		circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
+		
+		if(((x - (circle.getLayoutX() + BALL_RADIUS)) > GameImpl.WIDTH) || (((x - (circle.getLayoutX() + BALL_RADIUS))) < 0)) {
+			dx = dx * -1;
+		} else {
+			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
+		}
+		if(((y - (circle.getLayoutY() + BALL_RADIUS)) > GameImpl.WIDTH) || (((y - (circle.getLayoutY() + BALL_RADIUS))) < 0)) {
+			dy = dy * -1;
+		} else {
+			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
+		}
 	}
 }
