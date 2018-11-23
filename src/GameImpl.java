@@ -6,6 +6,7 @@ import javafx.event.*;
 import java.util.*;
 
 public class GameImpl extends Pane implements Game {
+	
 	/**
 	 * Defines different states of the game.
 	 */
@@ -26,6 +27,9 @@ public class GameImpl extends Pane implements Game {
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
+	
+	// gameLosses counter
+	public static int gameLosses = 0;
 
 	/**
 	 * Constructs a new GameImpl.
@@ -62,6 +66,9 @@ public class GameImpl extends Pane implements Game {
 
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
+		
+		// Resets loss counter
+		gameLosses = 0;
 
 		// Create and add ball
 		ball = new Ball();
@@ -118,6 +125,11 @@ public class GameImpl extends Pane implements Game {
 			public void handle (long currentNanoTime) {
 				if (lastNanoTime >= 0) {  // Necessary for first clock-tick.
 					GameState state;
+					if (gameLosses == 5) {
+						state = GameState.LOST;
+						stop();
+						restartGame(state);
+					}
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
 						// Once the game is no longer ACTIVE, stop the AnimationTimer.
 						stop();

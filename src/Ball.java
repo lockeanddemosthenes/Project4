@@ -78,13 +78,16 @@ public class Ball {
 		x += dx;
 		y += dy;
 		
-		if(x > GameImpl.WIDTH || x <= 0) {
+		if(x >= GameImpl.WIDTH || x <= 0) {
 			reverseDirectionX();
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
-		if(y > GameImpl.HEIGHT || y <= 0) {
+		if(y <= 0) {
 			reverseDirectionY();
+		} else if(y >= GameImpl.HEIGHT) {
+			reverseDirectionY();
+			GameImpl.gameLosses += 1;
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
