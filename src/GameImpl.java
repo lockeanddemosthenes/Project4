@@ -43,6 +43,16 @@ public class GameImpl extends Pane implements Game {
 	public Pane getPane () {
 		return this;
 	}
+	
+	public Paddle getPaddle() {
+		return paddle;
+	}
+	
+	public boolean isPaddleColliding {
+		double paddleLeft = paddle.getX() - Paddle.PADDLE_WIDTH;
+		double paddleRight = paddle.getX() + Paddle.PADDLE_WIDTH;
+		if()
+	}
 
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
@@ -87,7 +97,8 @@ public class GameImpl extends Pane implements Game {
 				run();
 			}
 		});
-
+		
+		
 		// Add another event handler to steer paddle...
 	}
 

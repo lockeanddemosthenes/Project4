@@ -72,5 +72,7 @@ public class Ball {
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
+		
+		
 	}
 }
