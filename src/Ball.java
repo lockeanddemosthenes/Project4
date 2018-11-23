@@ -62,13 +62,17 @@ public class Ball {
 		x += dx;
 		y += dy;
 		
-		if(((x - (circle.getLayoutX() + BALL_RADIUS)) > GameImpl.WIDTH) || (((x - (circle.getLayoutX() + BALL_RADIUS))) < 0)) {
-			dx = dx * -1;
+		////System.out.println((x - (circle.getLayoutX() + BALL_RADIUS)));
+		//System.out.println(GameImpl.WIDTH);
+		if(x > GameImpl.WIDTH || x <= 0) {
+			vx = vx * -1;
+			//circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
-		if(((y - (circle.getLayoutY() + BALL_RADIUS)) > GameImpl.WIDTH) || (((y - (circle.getLayoutY() + BALL_RADIUS))) < 0)) {
-			dy = dy * -1;
+		if(y > GameImpl.HEIGHT || y <= 0) {
+			vy = vy * -1;
+			//circle.setTranslateY(y - 2*dy - (circle.getLayoutY() + BALL_RADIUS));
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
