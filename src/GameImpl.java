@@ -48,10 +48,16 @@ public class GameImpl extends Pane implements Game {
 		return paddle;
 	}
 	
-	public boolean isPaddleColliding {
-		double paddleLeft = paddle.getX() - Paddle.PADDLE_WIDTH;
-		double paddleRight = paddle.getX() + Paddle.PADDLE_WIDTH;
-		if()
+	public boolean isPaddleColliding() {
+		double paddleLeft = paddle.getX() - (Paddle.PADDLE_WIDTH/2);
+		double paddleRight = paddle.getX() + (Paddle.PADDLE_WIDTH/2);
+		double paddleTop = paddle.getY() - (Paddle.PADDLE_HEIGHT/2);
+		double paddleBottom = paddle.getY() + (Paddle.PADDLE_HEIGHT/2);
+		if(ball.getX() >= paddleLeft && ball.getX() <= paddleRight && ball.getY() >= paddleTop && ball.getY() <= paddleBottom) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void restartGame (GameState state) {
@@ -133,6 +139,9 @@ public class GameImpl extends Pane implements Game {
 	 * @return the current game state
 	 */
 	public GameState runOneTimestep (long deltaNanoTime) {
+		if(isPaddleColliding() == true) {
+			ball.reverseDirectionY();
+		}
 		ball.updatePosition(deltaNanoTime);
 		return GameState.ACTIVE;
 	}

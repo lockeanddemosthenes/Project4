@@ -47,6 +47,14 @@ public class Ball {
 		vy = vy * -1;
 	}
 	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
 	public Ball () {
 		x = GameImpl.WIDTH/2;
 		y = GameImpl.HEIGHT/2;
@@ -80,7 +88,5 @@ public class Ball {
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
-		
-		
 	}
 }
