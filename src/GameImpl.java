@@ -160,15 +160,15 @@ public class GameImpl extends Pane implements Game {
 			public void handle (long currentNanoTime) {
 				if (lastNanoTime >= 0) {  // Necessary for first clock-tick.
 					GameState state;
-<<<<<<< HEAD
-					if(isPaddleColliding() == true) {
-						ball.reverseDirectionY();
-=======
+					
 					if (gameLosses == 5) {
 						state = GameState.LOST;
 						stop();
 						restartGame(state);
->>>>>>> 4bcd1857b99f4cc17b49073483c005f4365e583e
+					}
+					
+					if(isPaddleColliding() == true) {
+						ball.reverseDirectionY();
 					}
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
 						// Once the game is no longer ACTIVE, stop the AnimationTimer.
