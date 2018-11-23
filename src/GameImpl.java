@@ -76,7 +76,12 @@ public class GameImpl extends Pane implements Game {
 			@Override
 			public void handle (MouseEvent e) {
 				GameImpl.this.setOnMouseClicked(null);
-
+				setOnMouseMoved(new EventHandler<MouseEvent> () {
+					@Override
+					public void handle(MouseEvent e) {
+						paddle.moveTo(e.getSceneX(), e.getSceneY());
+					}
+				});
 				// As soon as the mouse is clicked, remove the startLabel from the game board
 				getChildren().remove(startLabel);
 				run();
