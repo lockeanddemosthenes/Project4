@@ -39,6 +39,14 @@ public class Ball {
 	 * Constructs a new Ball object at the centroid of the game board
 	 * with a default velocity that points down and right.
 	 */
+	
+	public void reverseDirectionX() {
+		vx = vx * -1;
+	}
+	public void reverseDirectionY() {
+		vy = vy * -1;
+	}
+	
 	public Ball () {
 		x = GameImpl.WIDTH/2;
 		y = GameImpl.HEIGHT/2;
@@ -63,12 +71,12 @@ public class Ball {
 		y += dy;
 		
 		if(x > GameImpl.WIDTH || x <= 0) {
-			vx = vx * -1;
+			reverseDirectionX();
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
 		if(y > GameImpl.HEIGHT || y <= 0) {
-			vy = vy * -1;
+			reverseDirectionY();
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
