@@ -66,6 +66,16 @@ public class GameImpl extends Pane implements Game {
 			return false;
 		}
 	}
+	
+	public void handlePaddleCollision() {
+		if (ball.getY() > paddle.getY()) {
+			ball.setY(paddle.getY() + (Paddle.PADDLE_HEIGHT/2) + Ball.BALL_RADIUS);
+		}
+		else {
+			ball.setY(paddle.getY() - (Paddle.PADDLE_HEIGHT/2) - Ball.BALL_RADIUS);
+		}
+		ball.reverseDirectionY();
+	}
 
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
@@ -108,15 +118,15 @@ public class GameImpl extends Pane implements Game {
 						double mouseX = e.getSceneX();
 						double mouseY = e.getSceneY();
 						if (mouseX < Paddle.PADDLE_WIDTH/2) {
-							mouseX = e.getSceneX();
+							mouseX = paddle.getX();
 						} else if (mouseX > GameImpl.WIDTH - Paddle.PADDLE_WIDTH/2) {
-							mouseX = e.getSceneX();
+							mouseX = paddle.getX();
 						}
 
 						if (mouseY < Paddle.MIN_Y_LOCATION_FRAC * GameImpl.HEIGHT) {
-							mouseY = e.getSceneY();
+							mouseY = paddle.getY();
 						} else if (mouseY > Paddle.MAX_Y_LOCATION_FRAC * GameImpl.HEIGHT) {
-							mouseY = e.getSceneY();
+							mouseY = paddle.getY();
 						}
 						while (paddle.getX() != mouseX || paddle.getY() != mouseY) {
 							if (paddle.getX() < mouseX) {
@@ -133,11 +143,9 @@ public class GameImpl extends Pane implements Game {
 								paddle.moveTo(paddle.getX(), paddle.getY() - Paddle.PADDLE_VELOCITY);
 							}
 							if(isPaddleColliding() == true) {
-								ball.reverseDirectionY();
+								handlePaddleCollision();
 							} 
 						}
-						//System.out.println(mouseX);
-						//paddle.moveTo(mouseX, e.getSceneY());
 					}
 				});
 				// As soon as the mouse is clicked, remove the startLabel from the game board
