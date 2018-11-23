@@ -24,6 +24,8 @@ class Paddle {
 	 * The maximum position (specified as a fraction of the game height) of center of the paddle.
 	 */
 	public static final double MAX_Y_LOCATION_FRAC = 0.9;
+	
+	public static final double PADDLE_VELOCITY = 1;
 
 	// Instance variables
 	private Rectangle rectangle;

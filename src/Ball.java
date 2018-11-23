@@ -80,11 +80,13 @@ public class Ball {
 		
 		if(x > GameImpl.WIDTH || x <= 0) {
 			reverseDirectionX();
+			updatePosition(deltaNanoTime);
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
 		if(y > GameImpl.HEIGHT || y <= 0) {
 			reverseDirectionY();
+			updatePosition(deltaNanoTime);
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}

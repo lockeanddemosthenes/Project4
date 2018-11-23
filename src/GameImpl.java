@@ -53,7 +53,10 @@ public class GameImpl extends Pane implements Game {
 		double paddleRight = paddle.getX() + (Paddle.PADDLE_WIDTH/2);
 		double paddleTop = paddle.getY() - (Paddle.PADDLE_HEIGHT/2);
 		double paddleBottom = paddle.getY() + (Paddle.PADDLE_HEIGHT/2);
-		if(ball.getX() >= paddleLeft && ball.getX() <= paddleRight && ball.getY() >= paddleTop && ball.getY() <= paddleBottom) {
+		if(ball.getX() + Ball.BALL_RADIUS >= paddleLeft && 
+				ball.getX() - Ball.BALL_RADIUS <= paddleRight && 
+				ball.getY() + Ball.BALL_RADIUS  >= paddleTop && 
+				ball.getY() - Ball.BALL_RADIUS  <= paddleBottom) {
 			return true;
 		} else {
 			return false;
@@ -95,7 +98,39 @@ public class GameImpl extends Pane implements Game {
 				setOnMouseMoved(new EventHandler<MouseEvent> () {
 					@Override
 					public void handle(MouseEvent e) {
-						paddle.moveTo(e.getSceneX(), e.getSceneY());
+						double mouseX = e.getSceneX();
+						double mouseY = e.getSceneY();
+						if (mouseX < Paddle.PADDLE_WIDTH/2) {
+							mouseX = e.getSceneX();
+						} else if (mouseX > GameImpl.WIDTH - Paddle.PADDLE_WIDTH/2) {
+							mouseX = e.getSceneX();
+						}
+
+						if (mouseY < Paddle.MIN_Y_LOCATION_FRAC * GameImpl.HEIGHT) {
+							mouseY = e.getSceneY();
+						} else if (mouseY > Paddle.MAX_Y_LOCATION_FRAC * GameImpl.HEIGHT) {
+							mouseY = e.getSceneY();
+						}
+						while (paddle.getX() != mouseX || paddle.getY() != mouseY) {
+							if (paddle.getX() < mouseX) {
+								paddle.moveTo(paddle.getX() + Paddle.PADDLE_VELOCITY,paddle.getY());
+							}
+							else if(paddle.getX() > mouseX) {
+								paddle.moveTo(paddle.getX() - Paddle.PADDLE_VELOCITY, paddle.getY());
+							}
+							
+							if (paddle.getY() < mouseY) {
+								paddle.moveTo(paddle.getX(), paddle.getY() + Paddle.PADDLE_VELOCITY);
+							}
+							else if(paddle.getY() > mouseY) {
+								paddle.moveTo(paddle.getX(), paddle.getY() - Paddle.PADDLE_VELOCITY);
+							}
+							if(isPaddleColliding() == true) {
+								ball.reverseDirectionY();
+							} 
+						}
+						//System.out.println(mouseX);
+						//paddle.moveTo(mouseX, e.getSceneY());
 					}
 				});
 				// As soon as the mouse is clicked, remove the startLabel from the game board
@@ -118,6 +153,9 @@ public class GameImpl extends Pane implements Game {
 			public void handle (long currentNanoTime) {
 				if (lastNanoTime >= 0) {  // Necessary for first clock-tick.
 					GameState state;
+					if(isPaddleColliding() == true) {
+						ball.reverseDirectionY();
+					}
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
 						// Once the game is no longer ACTIVE, stop the AnimationTimer.
 						stop();
@@ -139,9 +177,6 @@ public class GameImpl extends Pane implements Game {
 	 * @return the current game state
 	 */
 	public GameState runOneTimestep (long deltaNanoTime) {
-		if(isPaddleColliding() == true) {
-			ball.reverseDirectionY();
-		}
 		ball.updatePosition(deltaNanoTime);
 		return GameState.ACTIVE;
 	}
