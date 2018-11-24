@@ -35,36 +35,48 @@ public class Ball {
 		return circle;
 	}
 	
-	/**
-	 * Constructs a new Ball object at the centroid of the game board
-	 * with a default velocity that points down and right.
-	 */
 	
+	/**
+	 * multiplies the x velocity by negative 1
+	 */
 	public void reverseDirectionX() {
 		vx = vx * -1;
 	}
+	/**
+	 * multiplies the y velocity by negative 1
+	 */
 	public void reverseDirectionY() {
 		vy = vy * -1;
 	}
 	
-	public void setY(double _y) {
-		y = _y;
+	/**
+	 * sets the y coordinate of the ball
+	 * @param newY new y coordinate
+	 */
+	public void setY(double newY) {
+		y = newY;
 	}
 	
-	public boolean isGoingUp() {
-		if (vy > 0) {
-			return true;
-		} else return false;
-	}
-	
+	/**
+	 * getter for the x coordinate of the ball
+	 * @return the x coordinate of the ball
+	 */
 	public double getX() {
 		return x;
 	}
 	
+	/**
+	 * getter for the y coordinate of the ball
+	 * @return the y coordinate of the ball
+	 */
 	public double getY() {
 		return y;
 	}
 	
+	/**
+	 * Constructs a new Ball object at the centroid of the game board
+	 * with a default velocity that points down and right.
+	 */
 	public Ball () {
 		x = GameImpl.WIDTH/2;
 		y = GameImpl.HEIGHT/2;
@@ -80,6 +92,7 @@ public class Ball {
 	/**
 	 * Updates the position of the ball, given its current position and velocity,
 	 * based on the specified elapsed time since the last update.
+	 * Additionally ensures that where the ball is moving is in bounds.
 	 * @param deltaNanoTime the number of nanoseconds that have transpired since the last update
 	 */
 	public void updatePosition (long deltaNanoTime) {
@@ -88,14 +101,14 @@ public class Ball {
 		x += dx;
 		y += dy;
 		
-		if(x + BALL_RADIUS >= GameImpl.WIDTH || x - BALL_RADIUS <= 0) {
+		if(x + BALL_RADIUS > GameImpl.WIDTH || x - BALL_RADIUS < 0) {
 			reverseDirectionX();
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
-		if(y - BALL_RADIUS <= 0) {
+		if(y - BALL_RADIUS < 0) {
 			reverseDirectionY();
-		} else if(y + BALL_RADIUS >= GameImpl.HEIGHT) {
+		} else if(y + BALL_RADIUS > GameImpl.HEIGHT) {
 			reverseDirectionY();
 			GameImpl.gameLosses += 1;
 			

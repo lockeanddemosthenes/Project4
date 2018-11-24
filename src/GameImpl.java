@@ -52,7 +52,12 @@ public class GameImpl extends Pane implements Game {
 		return paddle;
 	}
 	
-	public boolean isPaddleColliding() {
+	/**
+	 * This checks if the radius of the ball is within the paddle rectangle
+	 * @return true if the paddle and the ball are intersecting; false otherwise
+	 */
+	
+	public boolean isBallPaddleColliding() {
 		double paddleLeft = paddle.getX() - (Paddle.PADDLE_WIDTH/2);
 		double paddleRight = paddle.getX() + (Paddle.PADDLE_WIDTH/2);
 		double paddleTop = paddle.getY() - (Paddle.PADDLE_HEIGHT/2);
@@ -67,7 +72,13 @@ public class GameImpl extends Pane implements Game {
 		}
 	}
 	
-	public void handlePaddleCollision() {
+	
+	/**
+	 * determines whether the ball was above or below the paddle during a collision 
+	 * ensures no overlap in the ball and the paddle
+	 * reverses the direction of the ball
+	 */
+	public void handleBallPaddleCollision() {
 		if (ball.getY() > paddle.getY()) {
 			ball.setY(paddle.getY() + (Paddle.PADDLE_HEIGHT/2) + Ball.BALL_RADIUS);
 		}
@@ -112,11 +123,20 @@ public class GameImpl extends Pane implements Game {
 			@Override
 			public void handle (MouseEvent e) {
 				GameImpl.this.setOnMouseClicked(null);
+				
 				setOnMouseMoved(new EventHandler<MouseEvent> () {
+					
+					/** This method handles a mouse move event by incrementing by the PADDLE_VELOCITY
+					 *  until the paddle reaches the destination.
+					 *  This method was chosen over using solely the moveTo because of the ability to check collisions along 
+					 *  a path and for the advantage of smoothness of the paddle movement.
+					 *  @param e The current mouse event
+					 */
 					@Override
 					public void handle(MouseEvent e) {
 						double mouseX = e.getSceneX();
 						double mouseY = e.getSceneY();
+						//This area here checks if the mouse is off the screen, or in an unreachable location.
 						if (mouseX < Paddle.PADDLE_WIDTH/2) {
 							mouseX = paddle.getX();
 						} else if (mouseX > GameImpl.WIDTH - Paddle.PADDLE_WIDTH/2) {
@@ -128,6 +148,8 @@ public class GameImpl extends Pane implements Game {
 						} else if (mouseY > Paddle.MAX_Y_LOCATION_FRAC * GameImpl.HEIGHT) {
 							mouseY = paddle.getY();
 						}
+						
+						//This area targets the current mouse and moves the paddle toward it
 						while (paddle.getX() != mouseX || paddle.getY() != mouseY) {
 							if (paddle.getX() < mouseX) {
 								paddle.moveTo(paddle.getX() + Paddle.PADDLE_VELOCITY,paddle.getY());
@@ -142,9 +164,6 @@ public class GameImpl extends Pane implements Game {
 							else if(paddle.getY() > mouseY) {
 								paddle.moveTo(paddle.getX(), paddle.getY() - Paddle.PADDLE_VELOCITY);
 							}
-							if(isPaddleColliding() == true) {
-								handlePaddleCollision();
-							} 
 						}
 					}
 				});
@@ -175,9 +194,11 @@ public class GameImpl extends Pane implements Game {
 						restartGame(state);
 					}
 					
-					if(isPaddleColliding() == true) {
-						ball.reverseDirectionY();
-					}
+					// collisions between ball and paddle are done here so that
+					// they are not relying on mouse movement
+					if(isBallPaddleColliding() == true) {
+						handleBallPaddleCollision();
+					} 
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
 						// Once the game is no longer ACTIVE, stop the AnimationTimer.
 						stop();

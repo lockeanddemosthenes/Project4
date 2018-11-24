@@ -5,6 +5,7 @@ import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 
@@ -40,9 +41,8 @@ public class Entity {
 		Label imageLabel = new Label("", new ImageView(image));
 		imageLabel.setLayoutX(x - image.getWidth()/2);
 		imageLabel.setLayoutY(y - image.getHeight()/2);
-		
-		// TODO Add the image to the game board
-		pane.getChildren().add(imageLabel);  // pane is of type Pane
+
+		// pane.getChildren().add(imageLabel);  // pane is of type Pane
 	}
 	
 	
