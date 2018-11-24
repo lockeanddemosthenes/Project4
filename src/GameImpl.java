@@ -74,9 +74,9 @@ public class GameImpl extends Pane implements Game {
 	
 	
 	/**
-	 * determines whether the ball was above or below the paddle during a collision 
-	 * ensures no overlap in the ball and the paddle
-	 * reverses the direction of the ball
+	 * Determines whether the ball was above or below the paddle during a collision 
+	 * Ensures no overlap in the ball and the paddle
+	 * Reverses the direction of the ball
 	 */
 	public void handleBallPaddleCollision() {
 		if (ball.getY() > paddle.getY()) {

@@ -109,6 +109,7 @@ public class Ball {
 		if(y - BALL_RADIUS < 0) {
 			reverseDirectionY();
 		} else if(y + BALL_RADIUS > GameImpl.HEIGHT) {
+			setY(GameImpl.HEIGHT - BALL_RADIUS);
 			reverseDirectionY();
 			GameImpl.gameLosses += 1;
 			
