@@ -101,6 +101,7 @@ public class Ball {
 	 * Updates the position of the ball, given its current position and velocity,
 	 * based on the specified elapsed time since the last update.
 	 * Additionally ensures that where the ball is moving is in bounds.
+	 * If the ball hits the bottom wall, the gameLosses counter is increased.
 	 * @param deltaNanoTime the number of nanoseconds that have transpired since the last update
 	 */
 	public void updatePosition (long deltaNanoTime) {
