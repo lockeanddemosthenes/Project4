@@ -111,6 +111,7 @@ public class Ball {
 		} else if(y + BALL_RADIUS > GameImpl.HEIGHT) {
 			reverseDirectionY();
 			GameImpl.gameLosses += 1;
+			System.out.println(GameImpl.gameLosses);
 			
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
