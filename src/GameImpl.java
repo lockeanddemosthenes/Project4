@@ -180,6 +180,7 @@ public class GameImpl extends Pane implements Game {
 							}
 							
 							//collisions are also tracked here so that the paddle does not skip over the ball
+							// this happened in testing when we moved the mouse very fast
 							if(isBallPaddleColliding() == true) {
 								handleBallPaddleCollision();
 							} 
@@ -188,7 +189,6 @@ public class GameImpl extends Pane implements Game {
 				});
 				// As soon as the mouse is clicked, remove the startLabel from the game board
 				getChildren().remove(startLabel);
-				
 				run();
 			}
 		});
