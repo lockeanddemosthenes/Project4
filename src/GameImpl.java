@@ -3,6 +3,8 @@ import javafx.scene.control.Label;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.MouseEvent;
 import javafx.event.*;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class GameImpl extends Pane implements Game {
@@ -50,6 +52,11 @@ public class GameImpl extends Pane implements Game {
 	
 	public Paddle getPaddle() {
 		return paddle;
+	}
+
+	public void addImageToScreen(String filename, double x, double y) throws FileNotFoundException {
+		Entity e = new Entity(filename, x, y);
+		e.addToPane(this);
 	}
 	
 	/**
@@ -103,7 +110,14 @@ public class GameImpl extends Pane implements Game {
 		// Create and add paddle
 		paddle = new Paddle();
 		getChildren().add(paddle.getRectangle());  // Add the paddle to the game board
-
+		
+		try {
+			addImageToScreen("duck.jpg", HEIGHT/2, WIDTH/2);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// Add start message
 		final String message;
 		if (state == GameState.LOST) {
@@ -169,6 +183,7 @@ public class GameImpl extends Pane implements Game {
 				});
 				// As soon as the mouse is clicked, remove the startLabel from the game board
 				getChildren().remove(startLabel);
+				
 				run();
 			}
 		});

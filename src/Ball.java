@@ -58,6 +58,14 @@ public class Ball {
 	}
 	
 	/**
+	 * sets the x coordinate of the ball
+	 * @param newX new x coordinate
+	 */
+	public void setX(double newX) {
+		x = newX;
+	}
+	
+	/**
 	 * getter for the x coordinate of the ball
 	 * @return the x coordinate of the ball
 	 */
@@ -101,13 +109,18 @@ public class Ball {
 		x += dx;
 		y += dy;
 		
-		if(x + BALL_RADIUS > GameImpl.WIDTH || x - BALL_RADIUS < 0) {
+		if(x + BALL_RADIUS > GameImpl.WIDTH) {
+			setX(GameImpl.WIDTH - BALL_RADIUS);
+			reverseDirectionX();
+		} else if (x - BALL_RADIUS < 0) {
+			setX(BALL_RADIUS);
 			reverseDirectionX();
 		} else {
 			circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		}
 		if(y - BALL_RADIUS < 0) {
 			reverseDirectionY();
+			setY(BALL_RADIUS);
 		} else if(y + BALL_RADIUS > GameImpl.HEIGHT) {
 			setY(GameImpl.HEIGHT - BALL_RADIUS);
 			reverseDirectionY();
