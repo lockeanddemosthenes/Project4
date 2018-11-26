@@ -16,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 
-public class Entity extends Object{
+public class Entity implements Collidable {
 	// Constants
 	/**
 	 * The width of the paddle.
@@ -40,7 +40,9 @@ public class Entity extends Object{
 	public double getY () {
 		return rectangle.getLayoutY() + rectangle.getTranslateY() + ENTITY_HEIGHT/2;
 	}
-
+	
+	
+	
 	private Rectangle rectangle;
 	private Label imageLabel;
 	
@@ -58,6 +60,16 @@ public class Entity extends Object{
 		imageLabel = new Label("", new ImageView(image));
 		imageLabel.setLayoutX(x - image.getWidth()/2);
 		imageLabel.setLayoutY(y - image.getHeight()/2);
+	}
+
+	@Override
+	public double getWidth() {
+		return ENTITY_WIDTH;
+	}
+
+	@Override
+	public double getHeight() {
+		return ENTITY_HEIGHT;
 	}
 	
 	

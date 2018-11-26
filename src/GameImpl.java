@@ -29,6 +29,7 @@ public class GameImpl extends Pane implements Game {
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
+	private List<Entity> entities = new ArrayList<Entity>();
 	
 	// gameLosses counter
 	public static int gameLosses = 0;
@@ -60,25 +61,24 @@ public class GameImpl extends Pane implements Game {
 	}
 	
 	/**
-	 * This checks if the radius of the ball is within the paddle rectangle
-	 * @return true if the paddle and the ball are intersecting; false otherwise
+	 * This checks if the border of the a is within the b rectangle
+	 * @return true if a and b are intersecting; false otherwise
 	 */
 	
-	public boolean isBallPaddleColliding() {
-		double paddleLeft = paddle.getX() - (Paddle.PADDLE_WIDTH/2);
-		double paddleRight = paddle.getX() + (Paddle.PADDLE_WIDTH/2);
-		double paddleTop = paddle.getY() - (Paddle.PADDLE_HEIGHT/2);
-		double paddleBottom = paddle.getY() + (Paddle.PADDLE_HEIGHT/2);
-		if(ball.getX() + Ball.BALL_RADIUS >= paddleLeft && 
-				ball.getX() - Ball.BALL_RADIUS <= paddleRight && 
-				ball.getY() + Ball.BALL_RADIUS  >= paddleTop && 
-				ball.getY() - Ball.BALL_RADIUS  <= paddleBottom) {
+	public boolean isColliding(Collidable a, Collidable b) {
+		double left = a.getX() - (a.getWidth()/2);
+		double right = a.getX() + (a.getWidth()/2);
+		double top = a.getY() - (a.getHeight()/2);
+		double bottom = a.getY() + (a.getHeight()/2);
+		if(b.getX() + b.getWidth() >= left && 
+				b.getX() - b.getWidth() <= right && 
+				b.getY() + b.getHeight()  >= top && 
+				b.getY() - b.getHeight()  <= bottom) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
 	
 	/**
 	 * Determines whether the ball was above or below the paddle during a collision 
@@ -95,6 +95,7 @@ public class GameImpl extends Pane implements Game {
 		ball.reverseDirectionY();
 	}
 
+	
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
 		
@@ -181,7 +182,7 @@ public class GameImpl extends Pane implements Game {
 							
 							//collisions are also tracked here so that the paddle does not skip over the ball
 							// this happened in testing when we moved the mouse very fast
-							if(isBallPaddleColliding() == true) {
+							if(isColliding(ball, paddle) == true) {
 								handleBallPaddleCollision();
 							} 
 						}
@@ -216,7 +217,7 @@ public class GameImpl extends Pane implements Game {
 					
 					// collisions between ball and paddle are also done here so that
 					// they are not solely relying on mouse movement
-					if(isBallPaddleColliding() == true) {
+					if(isColliding(ball, paddle) == true) {
 						handleBallPaddleCollision();
 					} 
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {

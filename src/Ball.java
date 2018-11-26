@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
  */
 //this is a test
 // this is another test
-public class Ball {
+public class Ball implements Collidable {
 	// Constants
 	/**
 	 * The radius of the ball.
@@ -131,6 +131,18 @@ public class Ball {
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
+	}
+
+
+	@Override
+	public double getWidth() {
+		return BALL_RADIUS;
+	}
+
+
+	@Override
+	public double getHeight() {
+		return BALL_RADIUS;
 	}
 	
 	

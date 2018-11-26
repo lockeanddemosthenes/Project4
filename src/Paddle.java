@@ -2,7 +2,7 @@ import java.awt.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-class Paddle {
+class Paddle implements Collidable {
 	// Constants
 	/**
 	 * The width of the paddle.
@@ -88,5 +88,15 @@ class Paddle {
 
 		rectangle.setTranslateX(newX - (rectangle.getLayoutX() + PADDLE_WIDTH/2));
 		rectangle.setTranslateY(newY - (rectangle.getLayoutY() + PADDLE_HEIGHT/2));
+	}
+
+	@Override
+	public double getWidth() {
+		return PADDLE_WIDTH;
+	}
+
+	@Override
+	public double getHeight() {
+		return PADDLE_HEIGHT;
 	}
 }
