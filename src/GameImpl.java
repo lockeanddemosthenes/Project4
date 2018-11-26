@@ -178,6 +178,11 @@ public class GameImpl extends Pane implements Game {
 							else if(paddle.getY() > mouseY) {
 								paddle.moveTo(paddle.getX(), paddle.getY() - Paddle.PADDLE_VELOCITY);
 							}
+							
+							//collisions are also tracked here so that the paddle does not skip over the ball
+							if(isBallPaddleColliding() == true) {
+								handleBallPaddleCollision();
+							} 
 						}
 					}
 				});
@@ -209,8 +214,8 @@ public class GameImpl extends Pane implements Game {
 						restartGame(state);
 					}
 					
-					// collisions between ball and paddle are done here so that
-					// they are not relying on mouse movement
+					// collisions between ball and paddle are also done here so that
+					// they are not solely relying on mouse movement
 					if(isBallPaddleColliding() == true) {
 						handleBallPaddleCollision();
 					} 
