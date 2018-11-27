@@ -139,9 +139,12 @@ public class GameImpl extends Pane implements Game {
 		getChildren().add(paddle.getRectangle());  // Add the paddle to the game board
 		
 		try {
+			addImageToScreen ("horse.jpg", HEIGHT/3, WIDTH/2);
+			addImageToScreen("horse.jpg", HEIGHT/2, WIDTH/3);
 			addImageToScreen("duck.jpg", HEIGHT/2, WIDTH/2);
+			addImageToScreen("duck.jpg", HEIGHT/3, WIDTH/3);
+			addImageToScreen("goat.jpg", HEIGHT/4, WIDTH/4);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
