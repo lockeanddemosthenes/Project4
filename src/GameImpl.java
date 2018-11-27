@@ -66,9 +66,9 @@ public class GameImpl extends Pane implements Game {
 	}
 
 	/**
-	 * This checks if the border of the a is within the b rectangle
+	 * This checks if the border of the a is within the b rectangle in the x direction
 	 * 
-	 * @return true if a and b are intersecting; false otherwise
+	 * @return true if a and b are intersecting in the x direction; false otherwise
 	 */
 
 	public boolean isCollidingX(Collidable a, Collidable b) {
@@ -88,6 +88,12 @@ public class GameImpl extends Pane implements Game {
 			return false;
 		}
 	}
+	
+	/**
+	 * This checks if the border of the a is within the b rectangle in the y direciton
+	 * 
+	 * @return true if a and b are intersecting in the y direction; false otherwise
+	 */
 
 	public boolean isCollidingY(Collidable a, Collidable b) {
 		double left = a.getX() - (a.getWidth() / 2);
@@ -107,7 +113,15 @@ public class GameImpl extends Pane implements Game {
 			return false;
 		}
 	}
-
+	
+	/**
+	 *  This function iterates through all of the know entities and implements features
+	 *  associated with ball collisions
+	 *  ie
+	 *  	- removing the image
+	 *  	- speeding the ball
+	 */
+	
 	public void handleEntityCollisions() {
 		List<Entity> temp = new ArrayList<Entity>();
 
@@ -131,6 +145,7 @@ public class GameImpl extends Pane implements Game {
 	 * Determines whether the ball was above or below the paddle during a collision
 	 * Ensures no overlap in the ball and the paddle Reverses the direction of the
 	 * ball
+	 * @param a the object that we are checking the collision with the ball for 
 	 */
 	public void handleBallCollisionY(Collidable a) {
 		if (ball.getY() > a.getY()) {
@@ -140,7 +155,13 @@ public class GameImpl extends Pane implements Game {
 		}
 		ball.reverseDirectionY();
 	}
-
+	
+	/**
+	 * Determines whether the ball was above or below the paddle during a collision
+	 * Ensures no overlap in the ball and the paddle Reverses the direction of the
+	 * ball
+	 * @param a the object that we are checking the collision with the ball for 
+	 */
 	public void handleBallCollisionX(Collidable a) {
 		if (ball.getX() > a.getX()) {
 			ball.setX(a.getX() + (a.getWidth() / 2) + Ball.BALL_RADIUS);
@@ -149,7 +170,7 @@ public class GameImpl extends Pane implements Game {
 		}
 		ball.reverseDirectionX();
 	}
-
+	
 	private void restartGame(GameState state) {
 		getChildren().clear(); // remove all components from the game
 		
@@ -172,10 +193,12 @@ public class GameImpl extends Pane implements Game {
 		getChildren().add(paddle.getRectangle()); // Add the paddle to the game board
 
 		try {
-			addImageToScreen("horse.jpg",  .5*WIDTH / 4, HEIGHT / 3);
-			addImageToScreen("duck.jpg",  1.5*WIDTH / 4, HEIGHT / 3);
-			addImageToScreen("duck.jpg",  2.5*WIDTH / 4, HEIGHT / 3);
-			addImageToScreen("goat.jpg",  3.5*WIDTH / 4, HEIGHT / 3);
+			for (int i = 0; i < 4; i++) {
+				addImageToScreen("horse.jpg",  .5*WIDTH / 4, (i+.5)*HEIGHT / 8);
+				addImageToScreen("duck.jpg",  1.5*WIDTH / 4, (i+.5)*HEIGHT / 8);
+				addImageToScreen("duck.jpg",  2.5*WIDTH / 4, (i+.5)*HEIGHT / 8);
+				addImageToScreen("goat.jpg",  3.5*WIDTH / 4, (i+.5)*HEIGHT / 8);
+			}
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}

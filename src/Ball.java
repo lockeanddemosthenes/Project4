@@ -27,6 +27,7 @@ public class Ball implements Collidable {
 	 */
 	
 	public static final double SPEED_INCREASE_FACTOR = 1.15;
+
 	// Instance variables
 	// (x,y) is the position of the center of the ball.
 	private double x, y;
@@ -131,8 +132,6 @@ public class Ball implements Collidable {
 			setY(GameImpl.HEIGHT - BALL_RADIUS);
 			reverseDirectionY();
 			GameImpl.gameLosses += 1;
-			System.out.println(GameImpl.gameLosses);
-			
 		} else {
 			circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 		}
