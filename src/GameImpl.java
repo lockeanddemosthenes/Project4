@@ -29,10 +29,11 @@ public class GameImpl extends Pane implements Game {
 	 * The error of the mouse loop
 	 */
 	public static final int MOUSE_ERROR = 1;
+	
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
-	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Entity> entities;
 
 	// gameLosses counter
 	public static int gameLosses = 0;
@@ -153,7 +154,7 @@ public class GameImpl extends Pane implements Game {
 		getChildren().clear(); // remove all components from the game
 		
 		
-		
+		entities = new ArrayList<Entity>();
 		
 		// Resets loss counter
 		gameLosses = 0;
@@ -294,6 +295,7 @@ public class GameImpl extends Pane implements Game {
 					} else if (isCollidingY(paddle, ball) == true) {
 						handleBallCollisionY(paddle);
 					}
+					
 					handleEntityCollisions();
 
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
