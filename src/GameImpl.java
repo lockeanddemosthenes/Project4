@@ -33,6 +33,8 @@ public class GameImpl extends Pane implements Game {
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
+	
+	// a list of all the current entities on the screen
 	private List<Entity> entities;
 
 	// gameLosses counter
@@ -50,15 +52,30 @@ public class GameImpl extends Pane implements Game {
 	public String getName() {
 		return "Zutopia";
 	}
-
+	
+	/**
+	 * a getter for the current pand (AKA the current class)
+	 * @return the current pane (the current class)
+	 */
 	public Pane getPane() {
 		return this;
 	}
-
+	
+	/**
+	 * A getter for the current paddle
+	 * @return the current paddle
+	 */
 	public Paddle getPaddle() {
 		return paddle;
 	}
-
+	
+	/**
+	 * envokes the constuctor of the entity class and adds the new entity to the entities list
+	 * @param filename the absolute or relative path of the image
+	 * @param x the center x coordinate of the image
+	 * @param y the center y coordinate of the image
+	 * @throws FileNotFoundException if the file cannot be found
+	 */ 
 	public void addImageToScreen(String filename, double x, double y) throws FileNotFoundException {
 		Entity e = new Entity(filename, x, y);
 		e.addToPane(this);
