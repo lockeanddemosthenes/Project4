@@ -21,7 +21,12 @@ public class Ball implements Collidable {
 	 * The initial velocity of the ball in the y direction.
 	 */
 	public static final double INITIAL_VY = 1e-7;
-
+	
+	/**
+	 *  Factor at which speed increases
+	 */
+	
+	public static final double SPEED_INCREASE_FACTOR = 1.15;
 	// Instance variables
 	// (x,y) is the position of the center of the ball.
 	private double x, y;
@@ -145,5 +150,13 @@ public class Ball implements Collidable {
 		return BALL_RADIUS;
 	}
 	
+	public void speedUp() {
+		vx *= SPEED_INCREASE_FACTOR;
+		vy *= SPEED_INCREASE_FACTOR;
+	}
 	
+	public void resetSpeed() {
+		vx = INITIAL_VX;
+		vy = INITIAL_VY;
+	}
 }

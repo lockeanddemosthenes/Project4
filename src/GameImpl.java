@@ -28,7 +28,7 @@ public class GameImpl extends Pane implements Game {
 	/**
 	 * The error of the mouse loop
 	 */
-	public static final int MOUSE_ERROR = 2;
+	public static final int MOUSE_ERROR = 1;
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
@@ -108,7 +108,6 @@ public class GameImpl extends Pane implements Game {
 	}
 
 	public void handleEntityCollisions() {
-		
 		List<Entity> temp = new ArrayList<Entity>();
 
 		for (Entity e : entities) {
@@ -116,10 +115,12 @@ public class GameImpl extends Pane implements Game {
 				handleBallCollisionX(e);
 				e.removeImage(this);
 				temp.add(e);
+				ball.speedUp();
 			} else if (isCollidingY(e, ball) == true) {
 				handleBallCollisionY(e);
 				e.removeImage(this);
 				temp.add(e);
+				ball.speedUp();
 			}
 		}
 		entities.removeAll(temp);
@@ -150,14 +151,19 @@ public class GameImpl extends Pane implements Game {
 
 	private void restartGame(GameState state) {
 		getChildren().clear(); // remove all components from the game
-
+		
+		
+		
+		
 		// Resets loss counter
 		gameLosses = 0;
 
 		// Create and add ball
 		ball = new Ball();
 		getChildren().add(ball.getCircle()); // Add the ball to the game board
-
+		
+		// Resets speed
+		ball.resetSpeed();
 		// Create and add animals ...
 
 		// Create and add paddle
@@ -165,11 +171,10 @@ public class GameImpl extends Pane implements Game {
 		getChildren().add(paddle.getRectangle()); // Add the paddle to the game board
 
 		try {
-			addImageToScreen("horse.jpg", HEIGHT / 3, WIDTH / 2);
-			addImageToScreen("horse.jpg", HEIGHT / 2, WIDTH / 3);
-			addImageToScreen("duck.jpg", HEIGHT / 2, WIDTH / 2);
-			addImageToScreen("duck.jpg", HEIGHT / 3, WIDTH / 3);
-			addImageToScreen("goat.jpg", HEIGHT / 4, WIDTH / 4);
+			addImageToScreen("horse.jpg",  .5*WIDTH / 4, HEIGHT / 3);
+			addImageToScreen("duck.jpg",  1.5*WIDTH / 4, HEIGHT / 3);
+			addImageToScreen("duck.jpg",  2.5*WIDTH / 4, HEIGHT / 3);
+			addImageToScreen("goat.jpg",  3.5*WIDTH / 4, HEIGHT / 3);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
