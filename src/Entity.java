@@ -38,8 +38,10 @@ public class Entity implements Collidable {
 	private Rectangle rectangle;
 	private Label imageLabel;
 	
-	public void removeImage() {
-		
+	public void removeImage(Pane pane) {
+		pane.getChildren().remove(this.imageLabel);
+		rectangle.setLayoutX(-50);
+		rectangle.setLayoutY(-50);
 	}
 	
 	public void addToPane(Pane pane) {
@@ -52,6 +54,9 @@ public class Entity implements Collidable {
 		imageLabel = new Label("", new ImageView(image));
 		imageLabel.setLayoutX(x - image.getWidth()/2);
 		imageLabel.setLayoutY(y - image.getHeight()/2);
+		rectangle = new Rectangle(0, 0, ENTITY_WIDTH, ENTITY_HEIGHT);
+		rectangle.setLayoutX(x-ENTITY_WIDTH/2);
+		rectangle.setLayoutY(y-ENTITY_HEIGHT/2);
 	}
 
 	@Override
