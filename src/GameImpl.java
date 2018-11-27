@@ -71,10 +71,16 @@ public class GameImpl extends Pane implements Game {
 		double top = a.getY() - (a.getHeight()/2);
 		double bottom = a.getY() + (a.getHeight()/2);
 		if(b.getX() + b.getWidth() >= left && 
-			b.getX() - b.getWidth() <= right &&
-			b.getY() + b.getHeight()  >= top && 
-			b.getY() - b.getHeight()  <= bottom) {
-			return true;
+				b.getX() - b.getWidth() <= right &&
+				b.getY() + b.getHeight()  >= top && 
+				b.getY() - b.getHeight()  <= bottom) {
+			if ((b.getX()<left||b.getX()>right) 
+					&&(b.getY() + b.getHeight() >= top && 
+					b.getY() - b.getHeight() <= bottom)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -90,7 +96,13 @@ public class GameImpl extends Pane implements Game {
 				b.getY() + b.getHeight()  >= top && 
 				b.getY() - b.getHeight()  <= bottom) {
 			
-			return true;
+			if ((b.getY()<bottom||b.getY()>top)
+					&&(b.getX() + b.getWidth() >= left && 
+					b.getX() - b.getWidth() <= right )) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -211,10 +223,10 @@ public class GameImpl extends Pane implements Game {
 							
 							//collisions are also tracked here so that the paddle does not skip over the ball
 							// this happened in testing when we moved the mouse very fast
-							if(isCollidingX(ball, paddle) == true) {
+							if(isCollidingX(paddle, ball) == true) {
 								handleBallCollisionX(paddle);
 							} 
-							else if (isCollidingY(ball, paddle) == true) {
+							else if (isCollidingY(paddle, ball) == true) {
 								handleBallCollisionY(paddle);
 							}
 						}
@@ -249,10 +261,10 @@ public class GameImpl extends Pane implements Game {
 					
 					// collisions between ball and paddle are also done here so that
 					// they are not solely relying on mouse movement
-					if(isCollidingX(ball, paddle) == true) {
+					if(isCollidingX(paddle, ball) == true) {
 						handleBallCollisionX(paddle);
 					} 
-					else if (isCollidingY(ball, paddle) == true) {
+					else if (isCollidingY(paddle, ball) == true) {
 						handleBallCollisionY(paddle);
 					}
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {

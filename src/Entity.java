@@ -1,18 +1,10 @@
-import java.awt.*;
-
 import java.io.FileNotFoundException;
 
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
-import javafx.scene.media.*;            
 import javafx.scene.layout.*; 
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 
