@@ -65,15 +65,31 @@ public class GameImpl extends Pane implements Game {
 	 * @return true if a and b are intersecting; false otherwise
 	 */
 	
-	public boolean isColliding(Collidable a, Collidable b) {
+	public boolean isCollidingX(Collidable a, Collidable b) {
 		double left = a.getX() - (a.getWidth()/2);
 		double right = a.getX() + (a.getWidth()/2);
 		double top = a.getY() - (a.getHeight()/2);
 		double bottom = a.getY() + (a.getHeight()/2);
 		if(b.getX() + b.getWidth() >= left && 
-				b.getX() - b.getWidth() <= right && 
+			b.getX() - b.getWidth() <= right &&
+			b.getY() + b.getHeight()  >= top && 
+			b.getY() - b.getHeight()  <= bottom) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isCollidingY(Collidable a, Collidable b) {
+		double left = a.getX() - (a.getWidth()/2);
+		double right = a.getX() + (a.getWidth()/2);
+		double top = a.getY() - (a.getHeight()/2);
+		double bottom = a.getY() + (a.getHeight()/2);
+		if(b.getX() + b.getWidth() >= left && 
+				b.getX() - b.getWidth() <= right &&
 				b.getY() + b.getHeight()  >= top && 
 				b.getY() - b.getHeight()  <= bottom) {
+			
 			return true;
 		} else {
 			return false;
@@ -85,14 +101,24 @@ public class GameImpl extends Pane implements Game {
 	 * Ensures no overlap in the ball and the paddle
 	 * Reverses the direction of the ball
 	 */
-	public void handleBallPaddleCollision() {
-		if (ball.getY() > paddle.getY()) {
-			ball.setY(paddle.getY() + (Paddle.PADDLE_HEIGHT/2) + Ball.BALL_RADIUS);
+	public void handleBallCollisionY(Collidable a) {
+		if (ball.getY() > a.getY()) {
+			ball.setY(a.getY() + (a.getHeight()/2) + Ball.BALL_RADIUS);
 		}
 		else {
-			ball.setY(paddle.getY() - (Paddle.PADDLE_HEIGHT/2) - Ball.BALL_RADIUS);
+			ball.setY(a.getY() - (a.getHeight()/2) - Ball.BALL_RADIUS);
 		}
 		ball.reverseDirectionY();
+	}
+	
+	public void handleBallCollisionX(Collidable a) {
+		if (ball.getX() > a.getX()) {
+			ball.setX(a.getX() + (a.getWidth()/2) + Ball.BALL_RADIUS);
+		}
+		else {
+			ball.setX(a.getX() - (a.getWidth()/2) - Ball.BALL_RADIUS);
+		}
+		ball.reverseDirectionX();
 	}
 
 	
@@ -182,9 +208,12 @@ public class GameImpl extends Pane implements Game {
 							
 							//collisions are also tracked here so that the paddle does not skip over the ball
 							// this happened in testing when we moved the mouse very fast
-							if(isColliding(ball, paddle) == true) {
-								handleBallPaddleCollision();
+							if(isCollidingX(ball, paddle) == true) {
+								handleBallCollisionX(paddle);
 							} 
+							else if (isCollidingY(ball, paddle) == true) {
+								handleBallCollisionY(paddle);
+							}
 						}
 					}
 				});
@@ -217,9 +246,12 @@ public class GameImpl extends Pane implements Game {
 					
 					// collisions between ball and paddle are also done here so that
 					// they are not solely relying on mouse movement
-					if(isColliding(ball, paddle) == true) {
-						handleBallPaddleCollision();
+					if(isCollidingX(ball, paddle) == true) {
+						handleBallCollisionX(paddle);
 					} 
+					else if (isCollidingY(ball, paddle) == true) {
+						handleBallCollisionY(paddle);
+					}
 					if ((state = runOneTimestep(currentNanoTime - lastNanoTime)) != GameState.ACTIVE) {
 						// Once the game is no longer ACTIVE, stop the AnimationTimer.
 						stop();
