@@ -291,10 +291,10 @@ public class GameImpl extends Pane implements Game {
 					// collisions are also tracked here so that the paddle does not skip over the
 					// ball
 					// this happened in testing when we moved the mouse very fast
-					if (isCollidingX(paddle, ball) == true) {
-						handleBallCollisionX(paddle);
-					} else if (isCollidingY(paddle, ball) == true) {
+					if (isCollidingY(paddle, ball) == true) {
 						handleBallCollisionY(paddle);
+					} else if (isCollidingX(paddle, ball) == true) {
+						handleBallCollisionX(paddle);
 					}
 				}
 			}
@@ -330,10 +330,10 @@ public class GameImpl extends Pane implements Game {
 					
 					// collisions between ball and paddle are also done here so that
 					// they are not solely relying on mouse movement
-					if (isCollidingX(paddle, ball) == true) {
-						handleBallCollisionX(paddle);
-					} else if (isCollidingY(paddle, ball) == true) {
+					if (isCollidingY(paddle, ball) == true) {
 						handleBallCollisionY(paddle);
+					} else if (isCollidingX(paddle, ball) == true) {
+						handleBallCollisionX(paddle);
 					}
 					
 					handleEntityCollisions();
